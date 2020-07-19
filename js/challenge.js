@@ -2,15 +2,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const counter = document.getElementById('counter');
 
-    let minusButton = document.getElementById('minus');
+    const minusButton = document.getElementById('minus');
 
-    let plusButton = document.getElementById('plus');
+    const plusButton = document.getElementById('plus');
 
-    let heartButton = document.getElementById('heart');
+    const heartButton = document.getElementById('heart');
 
     let pauseButton = document.getElementById('pause');
 
-    let submitButton = document.getElementById('submit')
+    const submitButton = document.getElementById('submit')
+
+    const buttonsArray = [minusButton, plusButton, heartButton, submitButton] 
 
     const commentArea = document.querySelector('.comments');
 
@@ -31,18 +33,18 @@ document.addEventListener("DOMContentLoaded", () => {
             clearInterval(timer);
             e.target.id = 'resume';
             e.target.innerText = 'resume';
-            heartButton.disabled = true;
-            minusButton.disabled = true;
-            plusButton.disabled = true;
-            submitButton.disabled = true;
+            buttonsArray.forEach(function(button){
+                button.disabled = true;
+            });
+
         } else {
             timer = window.setInterval(timerFunc, 1000, counter);
             e.target.id = 'pause';
             e.target.innerText = 'pause';
             heartButton.disabled = false;
-            minusButton.disabled = false;
-            plusButton.disabled = false;
-            submitButton.disabled = false;
+            buttonsArray.forEach(function(button){
+                button.disabled = false;
+            });
         }
 
     };
