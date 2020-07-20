@@ -46,9 +46,24 @@ function increment() {
 
 // Select
 let heartB = document.getElementById('heart')
+let likesList = document.querySelector('.likes')
+
 // Listen
+heartB.addEventListener('click', heartFunc)
+
 // Do
 
+function heartFunc() {
+        let counterNumber = i
+        let likes_i = 1
+        let li = document.createElement('li')
+        if (counterNumber != "undefined")
+            li.innerHTML = `<li>${counterNumber} has ${likes_i} likes</li>`
+        else
+            counterNumber = i++
+            li.innerHTML = `<li>${counterNumber} has ${likes_i++} likes</li>`
+        likesList.appendChild(li);
+}
 
 // As a user, I can pause the counter, which should pause the counter
 // the pause button should then show the text "resume."
