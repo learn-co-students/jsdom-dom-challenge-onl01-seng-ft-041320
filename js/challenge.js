@@ -51,6 +51,8 @@ let heartB = document.getElementById('heart')
 
 
 // As a user, I can pause the counter, which should pause the counter
+// the pause button should then show the text "resume."
+// When 'resume' is clicked, it should restart the counter and re - enable the buttons.
 
 // Select
 let pauseB = document.getElementById('pause')
@@ -63,9 +65,12 @@ pauseB.addEventListener('click', pauseFunc)
 function pauseFunc(){
     if (!on) {
         on = true
+        pauseB.innerText = `resume`
     }
     else {
         on = false
+        pauseB.innerText = `pause`
+        i = 0
     }
 }
 
@@ -110,19 +115,20 @@ function disableFunc(){
 }
 
 
-// the pause button should then show the text "resume."
-// Select
-// Listen
-// Do
-
-
-// When 'resume' is clicked, it should restart the counter and re - enable the buttons.
-// Select
-// Listen
-// Do
-
-
 // As a user, I can leave comments on my gameplay, such as: "Wow, what a fun game this is."
 // Select
+// let commentForm = document.getElementById('comment-form')
+// let commentInput = document.getElementById('comment-input')
+// let commentB = document.getElementById('submit')
+// let list = document.getElementById('list')
+
 // Listen
+commentForm.addEventListener('submit', commentFunc)
+
 // Do
+
+function commentFunc(e) {
+    e.preventDefault()
+    list.innerHTML += `<li>${commentInput.value}</li>`
+    alert('Comment successfully added!')
+}
