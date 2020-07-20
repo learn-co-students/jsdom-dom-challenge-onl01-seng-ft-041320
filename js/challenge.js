@@ -53,17 +53,36 @@ heartB.addEventListener('click', heartFunc)
 
 // Do
 
+let likes_i = 0
+
 function heartFunc() {
-        let counterNumber = i
-        let likes_i = 1
-        let li = document.createElement('li')
-        if (counterNumber != "undefined")
-            li.innerHTML = `<li>${counterNumber} has ${likes_i} likes</li>`
-        else
-            counterNumber = i++
-            li.innerHTML = `<li>${counterNumber} has ${likes_i++} likes</li>`
-        likesList.appendChild(li);
+        if (document.getElementById(`Li${i}`) == null) {
+            let li = document.createElement('li')
+            li.setAttribute("id", `Li${i}`)
+            li.innerHTML = `${i} has 1 like`
+            likesList.appendChild(li)
+        }
+        else {
+            let li = document.getElementById(`Li${i}`)
+            likes_i = 1
+            likes_i++
+            li.innerHTML = `${i} has ${likes_i} likes`
+            likesList.appendChild(li)
+        }
+        
 }
+
+// function heartFunc() {
+//     let counterNumber = i
+//     let likes_i = 1
+//     let li = document.createElement('li')
+//     if (counterNumber != "undefined")
+//         li.innerHTML = `<li>${counterNumber} has ${likes_i} likes</li>`
+//     else
+//         counterNumber = i++
+//     li.innerHTML = `<li>${counterNumber} has ${likes_i++} likes</li>`
+//     likesList.appendChild(li);
+// }
 
 // As a user, I can pause the counter, which should pause the counter
 // the pause button should then show the text "resume."
