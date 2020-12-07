@@ -1,94 +1,100 @@
-let counter = document.querySelector("#counter");
-let minusButton = document.querySelector("#minus");
-let plusButton = document.querySelector("#plus");
-let heartButton = document.querySelector("#heart");
-let likes = document.querySelector(".likes");
-let pauseButton = document.getElementById('pause');
-let form = document.querySelector("#comment-form");
-let listComments = document.querySelector("div.comments");
-let buttons = document.querySelectorAll('button')
-let pause;
+// variables 
+const counterBox = document.getElementById('counter');
+const minusButton = document.getElementById('minus');
+const plusButton = document.getElementById('plus');
+const likeButton = document.getElementById('heart');
+const pauseButton = document.getElementById('pause');
+const submitButton = document.getElementById('submit');
+const form = document.getElementById('comment-form');
+const commentDiv = document.getElementById('list');
+playing = 0
+likedNumbers = []
 
+// functions
 
+function counting(object) {
+    let num = parseInt(object.innerText)
+    timer = setInterval(function() {
+        num = num + 1;
+        object.innerText = num;
+    }, 1000);
+};
 
-// Counter goes up by 1 every second
-function startCounter() {
-    let num = parseInt(counter.innerText);
-    num++;
-    counter.innerText = num;
-}
+function minusInteger() {
+    let num = parseInt(counterBox.innerText)
+    num = num - 1
+    counterBox.innerText = num
+};
 
-// Add and Subtract from the counter
+function plusInteger() {
+    let num = parseInt(counterBox.innerText)
+    num = num + 1
+    counterBox.innerText = num
+};
 
-function addCount() {
-    let counter = document.querySelector("#counter");
-    let num = parseInt(counter.textContent);
-    num++;
-    counter.innerText = num;
-}
-
-function subtractCount() {
-    let counter = document.querySelector("#counter");
-    let num = parseInt(counter.textContent);
-    num--;
-    counter.innerText = num;
-}
-
-
-// Heart emoji to the number
-
-function addLike() {
-    if (document.getElementById(`Li${counter}`) == null) {
-        let li = document.createElement('li');
-        li.setAttribute('id', `Li${counter}`)
-        li.innerHTML = `${counter.innerHTML} have this many likes : 1`
-        likes.appendChild(li)
-    } else {
-        let li = document.getElementById(`Li${counter}`)
-        let splitted = parseInt(li.innerHTML.split(":")[1]) + 1
-        li.innerHTML = `${counter.innerHTML} have this many likes : ${splitted}`
-        likes.appendChild(li)
+function likeInteger() {
+    object = document.getElementById("heart")
+    let num = parseInt(counterBox.innerText)
+    let ul = document.getElementsByTagName("ul")[0]
+    let entry = document.createElement('li');
+    likedNumbers.push(num)
+    var likeCount = 0;
+    for (var i = 0; i < likedNumbers.length; i++) {
+        if (likedNumbers[i] === num)
+            likeCount++;
+        entry.innerText = `${num} has been liked ${likeCount} times`
     }
-}
+
+    ul.appendChild(entry)
+};
 
 
-//Pause timer
-function enableBTNS() {
-    buttons.forEach(function(btn) {
-        if (btn.disabled == true) {
-            btn.disabled = false;
-        }
-    })
-}
-
-function pauseCount() {
-    if (this.innerText == "pause") {
-        this.innerText = "resume";
-        disableBTNS();
-        clearInterval(pause);
-    } else {
-        this.innerText = "pause";
-        enableBTNS()
-        pause = setInterval(startCounter, 1000);
+function pauseInteger() {
+    object = document.getElementById("pause")
+    if (playing === 0) {
+        clearInterval(timer),
+            playing = 1
+        object.innerText = "resume"
+        decrementButton.disabled = true
+        incrementButton.disabled = true
+        likeButton.disabled = true
+    } else if (playing === 1) {
+        counting(counterBox)
+        playing = 0
+        object.innerText = "pause"
+        decrementButton.disabled = false
+        incrementButton.disabled = false
+        likeButton.disabled = false
     }
-}
+};
 
-// Add a comment
+function addComment(event) {
+    formInputValue = document.getElementById("comment-input")
+    newPara = document.createElement('p');
+    newCommentNode = document.createTextNode(formInputValue.value)
+    newPara.appendChild(newCommentNode)
+    commentDiv.appendChild(newPara)
+};
+// event listeners
+document.addEventListener("DOMContentLoaded", counting(counterBox));
 
-function addComment(e) {
-    let listComments = document.querySelector("div.comments");
-    userComment = form.querySelector('input').value;
-    let liTag = document.createElement('li');
-    liTag.innerText = userComment;
-    listComments.append(liTag);
-    e.preventDefault();
-}
+minusButton.addEventListener("click", function() {
+    minusInteger()
+});
 
-//Event listeners
+plusButton.addEventListener("click", function() {
+    plusInteger()
+});
 
-pause = setInterval(startCounter, 1000);
-minusButton.addEventListener('click', subtractCount);
-plusButton.addEventListener('click', addCount);
-pauseButton.addEventListener('click', pauseCount);
-heartButton.addEventListener('click', addLike);
-form.addEventListener('submit', addComment);
+likeButton.addEventListener('click', function() {
+    likeInteger()
+});
+
+pauseButton.addEventListener('click', function() {
+    pauseInteger()
+});
+
+form.addEventListener('submit', function() {
+    event.preventDefault()
+    addComment()
+});
